@@ -130,7 +130,7 @@ return
 description
 @type function
 @version  
-@author Eduardo
+@author Eduardo Paro de SImoni
 @since 13/05/2021
 @return return_type, return_description
 -----------------------------------------------------------------------------------------/*/
@@ -172,7 +172,7 @@ Return
 description
 @type function
 @version  
-@author Eduardo
+@author Eduardo Paro de SImoni
 @since 13/05/2021
 @return return_type, return_description
 -----------------------------------------------------------------------------------------/*/
