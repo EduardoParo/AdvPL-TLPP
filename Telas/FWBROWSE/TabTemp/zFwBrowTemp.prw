@@ -182,7 +182,7 @@ static Function GeraDebug()
 
     oBrowse:GoTo( 2, .T. )
 
-    //teste solicitado pelo cliente
+    //teste
     cCod:="PRODCAL        "
     MeuAlias->(DbSetOrder(1))//TMP_COD
     if MeuAlias->(DbSeek(cCod))
