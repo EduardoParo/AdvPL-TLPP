@@ -13,9 +13,8 @@ static cTitulo := "TESTE_EDU"
 //---------------------------------------------------------------------------------------------------/*/
 function U_MyMvc()
 	local cView:='VIEWDEF.'+cNomeArq
-	conOut("Chamada da rotina")
 
-	FWExecView(†'DETAIL1†Sem†CabeÁalho',†cView,†MODEL_OPERATION_INSERT,†,†{†||†.T.†},†,†30†)
+	FWExecView(¬†'CAB + DETAIL',¬†cView,¬†MODEL_OPERATION_INSERT,¬†,¬†{¬†||¬†.T.¬†},¬†,¬†30¬†)
 
 return
 
@@ -34,10 +33,10 @@ static function ModelDef()
 	local oStCab   := FWFormModelStruct():New()
     local oStDet1  := FWFormModelStruct():New()
 
-	//Adiciona a tabela cABE«ALHO
+	//Adiciona a tabela cABE√áALHO
 	oStCab:AddTable('SB1', {'B1_FILIAL', 'B1_COD'}, "Cabecalho SB1")
 	
-	//Adiciona o campo de CÛdigo da Tabela
+	//Adiciona o campo de C√≥digo da Tabela
 	oStCab:AddField(;
 		"CODIGO CAB",;                                                                    // [01]  C   Titulo do campo
 		"CODIGO CAB",;                                                                    // [02]  C   ToolTip do campo
@@ -45,14 +44,14 @@ static function ModelDef()
 		"C",;                                                                         // [04]  C   Tipo do campo
 		TamSX3("B1_COD")[1],;                                                      // [05]  N   Tamanho do campo
 		0,;                                                                           // [06]  N   Decimal do campo
-		nil,;                                                                         // [07]  B   Code-block de validaÁ„o do campo
-		nil,;                                                                         // [08]  B   Code-block de validaÁ„o When do campo
+		nil,;                                                                         // [07]  B   Code-block de valida√ß√£o do campo
+		nil,;                                                                         // [08]  B   Code-block de valida√ß√£o When do campo
 		{},;                                                                          // [09]  A   Lista de valores permitido do campo
-		.T.,;                                                                         // [10]  L   Indica se o campo tem preenchimento obrigatÛrio
+		.T.,;                                                                         // [10]  L   Indica se o campo tem preenchimento obrigat√≥rio
 		FwBuildFeature( STRUCT_FEATURE_INIPAD, "Iif(!INCLUI,SB1->B1_COD,'')" ),;    // [11]  B   Code-block de inicializacao do campo
 		.T.,;                                                                         // [12]  L   Indica se trata-se de um campo chave
-		.F.,;                                                                         // [13]  L   Indica se o campo pode receber valor em uma operaÁ„o de update.
-		.F.)                                                                          // [14]  L   Indica se o campo È virtual
+		.F.,;                                                                         // [13]  L   Indica se o campo pode receber valor em uma opera√ß√£o de update.
+		.F.)                                                                          // [14]  L   Indica se o campo √© virtual
 	
     	oStDet1:AddField(;
 		"DESCRICAO DETAIL",;                                                                    // [01]  C   Titulo do campo
@@ -61,14 +60,14 @@ static function ModelDef()
 		"C",;                                                                         // [04]  C   Tipo do campo
 		TamSX3("B1_DESC")[1],;                                                      // [05]  N   Tamanho do campo
 		0,;                                                                           // [06]  N   Decimal do campo
-		nil,;                                                                         // [07]  B   Code-block de validaÁ„o do campo
-		nil,;                                                                         // [08]  B   Code-block de validaÁ„o When do campo
+		nil,;                                                                         // [07]  B   Code-block de valida√ß√£o do campo
+		nil,;                                                                         // [08]  B   Code-block de valida√ß√£o When do campo
 		{},;                                                                          // [09]  A   Lista de valores permitido do campo
-		.T.,;                                                                         // [10]  L   Indica se o campo tem preenchimento obrigatÛrio
+		.T.,;                                                                         // [10]  L   Indica se o campo tem preenchimento obrigat√≥rio
 		FwBuildFeature( STRUCT_FEATURE_INIPAD, "Iif(!INCLUI,SB1->B1_DESC,'')" ),;    // [11]  B   Code-block de inicializacao do campo
 		.T.,;                                                                         // [12]  L   Indica se trata-se de um campo chave
-		.F.,;                                                                         // [13]  L   Indica se o campo pode receber valor em uma operaÁ„o de update.
-		.F.)                                                                          // [14]  L   Indica se o campo È virtual
+		.F.,;                                                                         // [13]  L   Indica se o campo pode receber valor em uma opera√ß√£o de update.
+		.F.)                                                                          // [14]  L   Indica se o campo √© virtual
 	
 	oModel:AddFields("FORMCAB",/*cOwner*/,oStCab)
 	oModel:AddFields('FORMDETAIL','FORMCAB',oStDet1)
@@ -79,9 +78,9 @@ static function ModelDef()
 	//Criando o relacionamento
 	oModel:SetRelation('FORMDETAIL', aSB1Rel, SB1->(IndexKey(1)))
 	
-	//Setando outras informaÁıes do Modelo de Dados
-    oModel:GetModel("FORMCAB"):SetDescription("Formul·rio do Cadastro "+cTitulo)
-    oModel:GetModel("FORMDETAIL"):SetDescription("Formul·rio do Cadastro "+cTitulo)
+	//Setando outras informa√ß√µes do Modelo de Dados
+    oModel:GetModel("FORMCAB"):SetDescription("Formul√°rio do Cadastro "+cTitulo)
+    oModel:GetModel("FORMDETAIL"):SetDescription("Formul√°rio do Cadastro "+cTitulo)
 
 	oModel:SetPrimaryKey({})
 
@@ -112,15 +111,15 @@ static function ViewDef()
 		X3Picture("B1_COD"),;    // [07]  C   Picture
 		nil,;                       // [08]  B   Bloco de PictTre Var
 		nil,;                       // [09]  C   Consulta F3
-		.T.,;                       // [10]  L   Indica se o campo È alteravel
+		.T.,;                       // [10]  L   Indica se o campo √© alteravel
 		nil,;                       // [11]  C   Pasta do campo
 		nil,;                       // [12]  C   Agrupamento do campo
 		nil,;                       // [13]  A   Lista de valores permitido do campo (Combo)
-		nil,;                       // [14]  N   Tamanho maximo da maior opÁ„o do combo
+		nil,;                       // [14]  N   Tamanho maximo da maior op√ß√£o do combo
 		nil,;                       // [15]  C   Inicializador de Browse
-		nil,;                       // [16]  L   Indica se o campo È virtual
+		nil,;                       // [16]  L   Indica se o campo √© virtual
 		nil,;                       // [17]  C   Picture Variavel
-		nil)                        // [18]  L   Indica pulo de linha apÛs o campo
+		nil)                        // [18]  L   Indica pulo de linha ap√≥s o campo
 
         oStDet1:AddField(;
 		"B1_DESC",;               // [01]  C   Nome do Campo
@@ -132,17 +131,17 @@ static function ViewDef()
 		X3Picture("B1_DESC"),;    // [07]  C   Picture
 		nil,;                       // [08]  B   Bloco de PictTre Var
 		nil,;                       // [09]  C   Consulta F3
-		.T.,;                       // [10]  L   Indica se o campo È alteravel
+		.T.,;                       // [10]  L   Indica se o campo √© alteravel
 		nil,;                       // [11]  C   Pasta do campo
 		nil,;                       // [12]  C   Agrupamento do campo
 		nil,;                       // [13]  A   Lista de valores permitido do campo (Combo)
-		nil,;                       // [14]  N   Tamanho maximo da maior opÁ„o do combo
+		nil,;                       // [14]  N   Tamanho maximo da maior op√ß√£o do combo
 		nil,;                       // [15]  C   Inicializador de Browse
-		nil,;                       // [16]  L   Indica se o campo È virtual
+		nil,;                       // [16]  L   Indica se o campo √© virtual
 		nil,;                       // [17]  C   Picture Variavel
-		nil)                        // [18]  L   Indica pulo de linha apÛs o campo
+		nil)                        // [18]  L   Indica pulo de linha ap√≥s o campo
 	
-	//Criando a view que ser· o retorno da funÁ„o e setando o modelo da rotina
+	//Criando a view que ser√° o retorno da fun√ß√£o e setando o modelo da rotina
 	oView := FWFormView():New()
 	oView:SetModel(oModel)
 	oView:AddField("VIEW_CAB", oStCab, "FORMCAB")
@@ -156,11 +155,11 @@ static function ViewDef()
 	oView:SetOwnerView('VIEW_CAB','CABEC')
 	oView:SetOwnerView('VIEW_DETAIL1','DETAIL1')
 	
-	//Habilitando tÌtulo
-	oView:EnableTitleView('VIEW_CAB','CabeÁalho ')
+	//Habilitando t√≠tulo
+	oView:EnableTitleView('VIEW_CAB','Cabe√ßalho ')
 	oView:EnableTitleView('VIEW_DETAIL1','Itens ')
 	
-	//Tratativa padr„o para fechar a tela
+	//Tratativa padr√£o para fechar a tela
 	oView:SetCloseOnOk({||.T.})
 	
 	oView:AddOtherObject("VIEW_DETAIL1", {|oPanel| InfoPreve(oPanel)})
