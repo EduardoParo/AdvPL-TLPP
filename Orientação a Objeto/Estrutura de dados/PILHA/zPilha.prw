@@ -10,11 +10,11 @@ Classe  Pilha
 ------------------------------------------------*/
 class Pilha
     // Declaracao das propriedades da Classe
-    data oPilIni
-    data oPilFim  
-    data nCont 
+    data oPilIni  as object
+    data oPilFim  as object
+    data nCont    as object
 
-    // Declaração dos Métodos da Classe
+    // DeclaraÃ§Ã£o dos MÃ©todos da Classe
     method new() constructor
  
     method inserir(xConteudo)
