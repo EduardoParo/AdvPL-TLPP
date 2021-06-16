@@ -5,10 +5,10 @@
 @author Eduardo Paro de Simoni
 @version P12
 //-------------------------------------------------------------------*/
-function U_Incluir1()
-    local oModel    := nil
+function U_Incluir1() as undefined
+    local oModel    := nil as object
     
-    //Preparação do Ambiente
+    //PreparaÃ§Ã£o do Ambiente
     RpcSetEnv("99","01","Administrador","","COM","MATA114",{"SAL","DBL",""})
     
     oModel := FwLoadModel("MATA114")
