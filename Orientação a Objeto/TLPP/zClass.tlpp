@@ -1,0 +1,62 @@
+#include "protheus.ch"
+/*/{Protheus.doc}----------------------------------------------------------------------
+@type function 
+@version  12
+@author Eduardo Paro de SImoni
+@since 16/06/2021
+//---------------------------------------------------------------------------------------------------/*/
+Class EduTLPP
+	private   data name  as string
+	private   data idade as numeric
+
+	public    method New()               as object
+	public    method __set(xAtributo)    as undefined
+	public    method __get(xAtributo)    as undefined
+    public    method destroi(xAtributo)  as undefined
+
+EndClass
+
+method New() class EduTLPP 
+::name :=""
+::idade:=0
+
+Return Self
+
+method __get(xAtributo) class EduTLPP
+return &(xAtributo)
+
+/// Name Property
+method __set(xAtributo,xValor) class EduTLPP
+	&(xAtributo) := xValor
+return Nil
+
+/// Name Property
+method destroi(xAtributo) class EduTLPP
+	FreeObj(&(xAtributo))
+return Nil
+
+/*/{Protheus.doc}----------------------------------------------------------------------
+@type function 
+@version  12
+@author Eduardo Paro de SImoni
+@since 16/06/2021
+//---------------------------------------------------------------------------------------------------/*/
+function u_TLPPUse() as undefined
+	local oTLPP := Nil as object
+	local cName := "" as string
+
+	oTLPP := EduTLPP():New()
+
+	oTLPP:__set("self:name","Eduardo Paro de Simoni")
+    oTLPP:__set("self:idade",24)
+
+
+	conout(oTLPP:__get("self:name"))
+
+    oTLPP:destroi("self")
+
+    conout(oTLPP:__get("self:name"))
+
+	ConOut(cName)
+
+return
