@@ -2,37 +2,44 @@
 /*/{Protheus.doc}----------------------------------------------------------------------
 @type function 
 @version  12
-@author Eduardo Paro de SImoni
+@author github.com/EduardoParo/AdvPL
 @since 16/06/2021
 //---------------------------------------------------------------------------------------------------/*/
 Class EduTLPP
 	private   data name  as string
 	private   data idade as numeric
+        private   data quantidade as numeric
+	private   data quantidadeLiberadazeze as numeric
 
 	public    method New()               as object
 	public    method __set(xAtributo)    as undefined
 	public    method __get(xAtributo)    as undefined
-    public    method destroi(xAtributo)  as undefined
+    public    method destroi()           as undefined
 
 EndClass
 
 method New() class EduTLPP 
-::name :=""
-::idade:=0
+    ::name :=""
+    ::idade:=0
+    ::quantidade:=2
+    ::quantidadeLiberadazeze:=5
 
 Return Self
 
 method __get(xAtributo) class EduTLPP
-return &(xAtributo)
+local cComand:="self:"+xAtributo
+return &(cComand)
 
 /// Name Property
 method __set(xAtributo,xValor) class EduTLPP
-	&(xAtributo) := xValor
+    local cComand:="self:"+xAtributo
+	&(cComand) := xValor
 return Nil
 
 /// Name Property
-method destroi(xAtributo) class EduTLPP
-	FreeObj(&(xAtributo))
+method destroi() class EduTLPP
+local cComand:="self"
+	FreeObj(&(cComand))
 return Nil
 
 /*/{Protheus.doc}----------------------------------------------------------------------
@@ -43,19 +50,19 @@ return Nil
 //---------------------------------------------------------------------------------------------------/*/
 function u_TLPPUse() as undefined
 	local oTLPP := Nil as object
-	local cName := "" as string
+	local cName := ""  as string
 
 	oTLPP := EduTLPP():New()
 
-	oTLPP:__set("self:name","Eduardo Paro de Simoni")
-    oTLPP:__set("self:idade",24)
+	oTLPP:__set("name","Eduardo Paro de Simoni")
+    oTLPP:__set("idade",24)
 
 
-	conout(oTLPP:__get("self:name"))
+	conout(oTLPP:__get("name"))
 
-    oTLPP:destroi("self")
+    oTLPP:destroi()
 
-    conout(oTLPP:__get("self:name"))
+    conout(oTLPP:__get("name"))
 
 	ConOut(cName)
 
