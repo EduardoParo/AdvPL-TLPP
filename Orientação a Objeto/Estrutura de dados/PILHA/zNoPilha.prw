@@ -10,11 +10,11 @@
 class NoPilha
 
     // Declaracao das propriedades da Classe
-    data oNoProximo
-    data oNoAnterior
-    data xConteudo
+    data oNoProximo  as object
+    data oNoAnterior as object
+    data xConteudo   as object
 
-    // Declaração dos Métodos da Classe
+    // DeclaraÃ§Ã£o dos MÃ©todos da Classe
     method new(xConteudo) constructor
     method __get(xAtributo) 
     method __set(xAtributo, xValor) 
