@@ -3,21 +3,22 @@
 /*/{Protheus.doc} @author Eduardo Paro de Simoni
     Exemplo de FwCalendar
 -------------------------------------------------------------------*/
-function U_zFwCalendar()
-        local oDlg      := nil
-        local oCalend   := nil
-        local aCoors    := FwGetDialogSize()
-        local cTxtCel   :=''
-        Define MsDialog oDlg Title 'Calend·rio de Edu' From aCoors[1], aCoors[2] To aCoors[3], aCoors[4] Pixel
+function U_zFwCalendar() as undefined
+        local oDlg      := nil as object
+        local oCalend   := nil as object
+        local aCoors    := FwGetDialogSize() as array
+        local cTxtCel   :='' as string
+        
+        Define MsDialog oDlg Title 'Calend√°rio de Edu' From aCoors[1], aCoors[2] To aCoors[3], aCoors[4] Pixel
 
         cTxtCel:= '<h3>Teste de Estilo .css </h3> '
-        cTxtCel+= '<font color="red">Este texto È vermelho!</font> <br> '
-        cTxtCel+= '<font color="blue">Este texto È azul!</font><br>     '
-        cTxtCel+= '<font color="yellow">Este texto È amarelo!</font><br> '
-        cTxtCel+= '<font color="green">Este texto È verde!</font>'
+        cTxtCel+= '<font color="red">Este texto √© vermelho!</font> <br> '
+        cTxtCel+= '<font color="blue">Este texto √© azul!</font><br>     '
+        cTxtCel+= '<font color="yellow">Este texto √© amarelo!</font><br> '
+        cTxtCel+= '<font color="green">Este texto √© verde!</font>'
 
         oCalend := FwCalendar():New(Month(dDataBase), Year(dDataBase))
-        oCalend:aNomeCol := {'Domingo', 'Segunda', 'TerÁa', 'Quarta', 'Quinta', 'Sexta', 'S·bado', 'Semana'}
+        oCalend:aNomeCol := {'Domingo', 'Segunda', 'Ter√ßa', 'Quarta', 'Quinta', 'Sexta', 'S√°bado', 'Semana'}
         oCalend:lWeekColumn := .F.
         oCalend:lFooterLine := .F.
         oCalend:Activate( oDlg ) 
