@@ -6,8 +6,8 @@ description
 @author Eduardo Paro de SImoni
 @since 08/02/2021
 //---------------------------------------------------------------------------------------------------/*/
-function u_zXPilha()
-    local oPilha := nil
+function u_zXPilha() as undefined
+    local oPilha := nil as object
   
 
     oPilha := Pilha():new()
