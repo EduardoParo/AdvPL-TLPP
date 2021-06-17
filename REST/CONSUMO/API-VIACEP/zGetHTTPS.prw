@@ -10,10 +10,10 @@ github.com/EduardoParo
 //---------------------------------------------------------------------------------------------------/*/
 Function U_zget() as undefined
 	local cURl      :="https://viacep.com.br" as string
-    local oRest     := FwRest():New(cURl) as object
+        local oRest     := FwRest():New(cURl) as object
 	local cResource := "/ws/"+ALLTRIM('02511000')+"/json/unicode/" as string
 	local aHeader   := {} as array
-    local cErro, nErro, cRest  as undefined
+        local cErro, nErro, cRest  as undefined
 
 	//HEADER
 	AAdd(aHeader, "Content-Type: application/json; charset=UTF-8")
