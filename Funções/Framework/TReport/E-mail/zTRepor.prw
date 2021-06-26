@@ -24,7 +24,7 @@ function u_myTReport()
     oReport:setFile(cFile)
     
     oReport:nDevice := 8 	//1-Arquivo,2-Impressora,3-email,4-Planilha e 5-Html
-    oReport:cEmail  		:= "EDUARDO.PARO@TOTVS.COM.BR;everson.ribeiro@totvs.com.br;EDUARDO.PARO@HOTMAIL.COM;EDUARDO.SYSTEM96@GMAIL.COM;eduardo.paro@aluno.unip.com"
+    oReport:cEmail  		:= "EDUARDO.PARO@HOTMAIL.COM;EDUARDO.SYSTEM96@GMAIL.COM;eduardo.paro@aluno.unip.com"
 	
     oReport:nEnvironment:= 1 // 1 -Server / 2- Cliente
     oReport:nRemoteType:= NO_REMOTE
