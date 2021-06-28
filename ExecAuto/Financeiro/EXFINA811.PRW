@@ -10,32 +10,32 @@ ExecAuto Fina811()
 /*/
 //-------------------------------------------------------------------
 
-user function xFina811()
+user function xFina811() as undefined
 
-  local a811Param          := {}
-  private lMsErroAuto     := .F.
-  private lAutoErrNoFile  := .T.
+  local a811Param          := {} as array
+  private lMsErroAuto     := .F. as logical
+  private lAutoErrNoFile  := .T. as logical
   aRetorno :={}
 
-  //PreparaÁ„o do Ambiente
+  //Prepara√ß√£o do Ambiente
   RpcSetEnv("99","01","Administrador","","FIN","FINA811",{"SA1"})
     
-  aAdd( a811Param,  PadR('000000',TamSX3('A1_COD')[1])           )   //CÛdigo do cliente De (tipo caracter)
+  aAdd( a811Param,  PadR('000000',TamSX3('A1_COD')[1])           )   //C√≥digo do cliente De (tipo caracter)
   aAdd( a811Param,  PadR('01',TamSX3('A1_LOJA')[1])              )   //Loja do cliente De (tipo caracter)
-  aAdd( a811Param,  Repl('Z',TamSX3('A1_COD')[1])                )   //CÛdigo do cliente AtÈ (tipo caracter)
-  aAdd( a811Param,  Repl('Z',TamSX3('A1_LOJA')[1])               )   //Loja do cliente AtÈ (tipo caracter)
-  aAdd( a811Param,  dDataBase - 999                              )   //Data de emiss„o De (tipo data)        
-  aAdd( a811Param,  dDataBase + 180                              )   //Data de emiss„o AtÈ (tipo data)  
-  aAdd( a811Param,  dDataBase                                    )   //Data de referÍncia (tipo data)     
-  aAdd( a811Param,  0                                            )   //Valor de (tipo numÈrico)     
-  aAdd( a811Param,  99.99999                                       )   //Valor AtÈ (tipo numÈrico)        
-  aAdd( a811Param,  '1'                                         )   //"2" (tipo caracter) - IMPORTANTE:  SEMPRE 2 PARA N√O APRESENTAR TELA DE SELE«√O DE FILIAIS
-  aAdd( a811Param,  '1'                                         )   //TÌtulos a vencer (tipo caracter  sendo "1" = Sim ou "2" = N„o)
+  aAdd( a811Param,  Repl('Z',TamSX3('A1_COD')[1])                )   //C√≥digo do cliente At√© (tipo caracter)
+  aAdd( a811Param,  Repl('Z',TamSX3('A1_LOJA')[1])               )   //Loja do cliente At√© (tipo caracter)
+  aAdd( a811Param,  dDataBase - 999                              )   //Data de emiss√£o De (tipo data)        
+  aAdd( a811Param,  dDataBase + 180                              )   //Data de emiss√£o At√© (tipo data)  
+  aAdd( a811Param,  dDataBase                                    )   //Data de refer√™ncia (tipo data)     
+  aAdd( a811Param,  0                                            )   //Valor de (tipo num√©rico)     
+  aAdd( a811Param,  99.99999                                       )   //Valor At√© (tipo num√©rico)        
+  aAdd( a811Param,  '1'                                         )   //"2" (tipo caracter) - IMPORTANTE:  SEMPRE 2 PARA N√ÉO APRESENTAR TELA DE SELE√á√ÉO DE FILIAIS
+  aAdd( a811Param,  '1'                                         )   //T√≠tulos a vencer (tipo caracter  sendo "1" = Sim ou "2" = N√£o)
   aAdd( a811Param,  '1'                                          )   //Considera valor (tipo caracter sendo "1" = Total ou  "2" = Saldo)
-  aAdd( a811Param,  '2'                                          )   //2" (tipo caracter) - IMPORTANTE: SEMPRE 2 PARA N√O APRESENTAR TELA DE SELE«√O DE SITUA«√O DE COBRAN«A
+  aAdd( a811Param,  '2'                                          )   //2" (tipo caracter) - IMPORTANTE: SEMPRE 2 PARA N√ÉO APRESENTAR TELA DE SELE√á√ÉO DE SITUA√á√ÉO DE COBRAN√áA
   aAdd( a811Param,  {}                                          )   //{} (tipo array) - IMPORTANTE: ENVIAR ARRAY VAZIO
   aAdd( a811Param,  ''                                          )   //"" (tipo caracter) - IMPORTANTE: SEMPRE VAZIO
-  aAdd( a811Param,  '000000'                                     )   //CÛdigo do layout da carta a ser utilizado (tipo caracter) 
+  aAdd( a811Param,  '000000'                                     )   //C√≥digo do layout da carta a ser utilizado (tipo caracter) 
                   
    // VOU CHAMAR NOVAMENTE A EXECAUTO POREM VOU MANIPULAR AQUELA CONDICAO            
   MSExecAuto({|x,y| Fina811(x,y)},0,a811Param)
@@ -51,7 +51,7 @@ user function xFina811()
             FwAlertInfo(cLog)
     endIf
   else
-  // RETORNOU SEM ERRO, MAS N√O CHAMAOU A FUN«√O PARA REALIZAR O ENVIO DO EMAIL
+  // RETORNOU SEM ERRO, MAS N√ÉO CHAMAOU A FUN√á√ÉO PARA REALIZAR O ENVIO DO EMAIL
   	FwAlertSucess("Sucesso!")
   endif
 
@@ -60,21 +60,21 @@ user function xFina811()
 Return
 
 /*
-a811Param[01] := CÛdigo do cliente De (tipo caracter)
+a811Param[01] := C√≥digo do cliente De (tipo caracter)
 a811Param[02] := Loja do cliente De (tipo caracter)
-a811Param[03] := CÛdigo do cliente AtÈ (tipo caracter)
-a811Param[04] := Loja do cliente AtÈ (tipo caracter)
-a811Param[05] := Data de emiss„o De (tipo data)        
-a811Param[06] := Data de emiss„o AtÈ (tipo data)  
-a811Param[07] := Data de referÍncia (tipo data)     
-a811Param[08] := Valor de (tipo numÈrico)     
-a811Param[09] := Valor AtÈ (tipo numÈrico)        
-a811Param[10] := "2" (tipo caracter) - IMPORTANTE:  SEMPRE 2 PARA N√O APRESENTAR TELA DE SELE«√O DE FILIAIS
-a811Param[11] := TÌtulos a vencer (tipo caracter  sendo "1" = Sim ou "2" = N„o)
+a811Param[03] := C√≥digo do cliente At√© (tipo caracter)
+a811Param[04] := Loja do cliente At√© (tipo caracter)
+a811Param[05] := Data de emiss√£o De (tipo data)        
+a811Param[06] := Data de emiss√£o At√© (tipo data)  
+a811Param[07] := Data de refer√™ncia (tipo data)     
+a811Param[08] := Valor de (tipo num√©rico)     
+a811Param[09] := Valor At√© (tipo num√©rico)        
+a811Param[10] := "2" (tipo caracter) - IMPORTANTE:  SEMPRE 2 PARA N√ÉO APRESENTAR TELA DE SELE√á√ÉO DE FILIAIS
+a811Param[11] := T√≠tulos a vencer (tipo caracter  sendo "1" = Sim ou "2" = N√£o)
 a811Param[12] := Considera valor (tipo caracter sendo "1" = Total ou  "2" = Saldo)
-a811Param[13] :="2" (tipo caracter) - IMPORTANTE: SEMPRE 2 PARA N√O APRESENTAR TELA DE SELE«√O DE SITUA«√O DE COBRAN«A
+a811Param[13] :="2" (tipo caracter) - IMPORTANTE: SEMPRE 2 PARA N√ÉO APRESENTAR TELA DE SELE√á√ÉO DE SITUA√á√ÉO DE COBRAN√áA
 a811Param[14] := {} (tipo array) - IMPORTANTE: ENVIAR ARRAY VAZIO
 a811Param[15] := "" (tipo caracter) - IMPORTANTE: SEMPRE VAZIO
-a811Param[16] := CÛdigo do layout da carta a ser utilizado (tipo caracter) 
+a811Param[16] := C√≥digo do layout da carta a ser utilizado (tipo caracter) 
 */
 
