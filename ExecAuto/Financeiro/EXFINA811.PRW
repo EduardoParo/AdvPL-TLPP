@@ -36,10 +36,9 @@ user function xFina811() as undefined
   aAdd( a811Param,  {}                                          )   //{} (tipo array) - IMPORTANTE: ENVIAR ARRAY VAZIO
   aAdd( a811Param,  ''                                          )   //"" (tipo caracter) - IMPORTANTE: SEMPRE VAZIO
   aAdd( a811Param,  '000000'                                     )   //Código do layout da carta a ser utilizado (tipo caracter) 
-                  
-   // VOU CHAMAR NOVAMENTE A EXECAUTO POREM VOU MANIPULAR AQUELA CONDICAO            
+                          
   MSExecAuto({|x,y| Fina811(x,y)},0,a811Param)
-// VEJA QUE RETORNOU PARA A EXECAUTO POREM ENVIOU O EMAIL AGORA
+
   if lMsErroAuto
     ConOut("Erro !")
   	MostraErro()
@@ -51,7 +50,6 @@ user function xFina811() as undefined
             FwAlertInfo(cLog)
     endIf
   else
-  // RETORNOU SEM ERRO, MAS NÃO CHAMAOU A FUNÇÃO PARA REALIZAR O ENVIO DO EMAIL
   	FwAlertSucess("Sucesso!")
   endif
 
