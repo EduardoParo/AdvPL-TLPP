@@ -1,125 +1,184 @@
-//Bibliotecas
-#Include 'Protheus.ch'
-#Include 'FWMVCDef.ch'
+#INCLUDE "TOTVS.CH"
+#INCLUDE "FWMVCDEF.CH"
 
-//Variaveis Estaticas
-static cTitulo := "Modelo 1"
-static cNomeArq :="zTabPad"
-
-/*/{Protheus.doc} U_zFwmBr----------------------------------------------------------------------
-description Teste da classe FWMBROWSE com uma tabela padrao
+/*/{Protheus.doc} U_TsColumn----------------------------------------------------------------------
+description Teste da classe FWMBROWSE com uma tabela temporaria
 @type function
 @version  12
 @author Eduardo Paro de SImoni
-@since 19/05/2021
+@since 17/05/2021
 @return return_type, return_description
 //---------------------------------------------------------------------------------------------------/*/
-function U_zFwmBr()
-	local aArea   := GetArea()
-	local oBrowse
+function u_DufwMBR()
+    local cAlias	:="MeuAlias" as string
 	
-	//Instanciando FWMBrowse - Somente com dicionario de dados
-	oBrowse := FWMBrowse():New()
+	private oBrowse	:=nil as object
+	private aRotina	:= MenuDef() as array
+	private aCampos	:= {}, aSeek := {}, aDados := {}, aValores := {}, aFieFilter := {} as array
 	
-	//Setando a tabela de cadastro de Autor/Interprete
-	oBrowse:SetAlias("SB1")
+    //CRIACAO DA TABELA TEMPORARIA
+    ExMyFWTempor(cAlias)
+	DbSelectArea(cAlias)
+	DbSetOrder(1)
+    
+	//Campos que irão compor o combo de pesquisa na tela principal
+	aAdd(aSeek,{"CODIGO"   , {{"","C",20,0, "TMP_COD"   ,"@!"}}, 1, .T. } )
+	aAdd(aSeek,{"DESCR", {{"","C",20,0, "TMP_DESC","@!"}}, 2, .T. } )
+	
+	//Campos que irão compor a tela de filtro
+	aAdd(aFieFilter,{"TMP_COD"	, "CODIGO"   , "C", 20, 0,"@!"})
+	aAdd(aFieFilter,{"TMP_DESC"	, "DESCR", "C", 20, 0,"@!"})
+	
+	oBrowse := FWmBrowse():New()
+	oBrowse:SetAlias( cAlias )
+	oBrowse:SetDescription( "TOTVS FWMBROWSE" )
+	oBrowse:SetSeek(.T.,aSeek)
+	oBrowse:SetTemporary(.T.)
+	//oBrowse:SetLocate()
+	oBrowse:SetUseFilter(.T.)
+	//oBrowse:SetDBFFilter(.T.)
+	//oBrowse:SetFilterdefault( "" ) //Exemplo de como inserir um filtro padrão >>> "TR_ST == 'A'"
+	oBrowse:SetFieldFilter(aFieFilter)
+	oBrowse:DisableDetails()
+	
+	//Legenda da grade, é obrigatório carregar antes de montar as colunas
+    oBrowse:AddLegend('TMP_TIPO $ "UN|AR"',"GREEN","Chave teste 1")
+    oBrowse:AddLegend('!(TMP_TIPO $ "PA|PI")',"RED","Chave teste 2")
+	
+	//Detalhes das colunas que serão exibidas
+	oBrowse:SetColumns(IncCol("TMP_COD"	    ,"CODIGO"	,01,"@!",0,010,0))
+	oBrowse:SetColumns(IncCol("TMP_DESC"	,"DESCR"	,02,"@!",1,040,0))
+	oBrowse:SetColumns(IncCol("TMP_TIPO"	,"TIPO"	    ,03,"@!",1,050,0))
 
-	//Setando a descricao da rotina
-	oBrowse:SetDescription(cTitulo)
-	
-	//oBrowse:SetFilterDefault("SB1->B1_XMEMO <>'' .AND. SB1->B1_TIPO == 'AI' ")
-	//Legendas
-	oBrowse:AddLegend( "SB1->B1_TIPO == 'PA'", "GREEN",	"Original" )
-	oBrowse:AddLegend( "SB1->B1_TIPO == 'MP'", "RED",	"Não Original" )
-	
-	oBrowse:setMenuDef(cNomeArq)
-	//Ativa a Browse
 	oBrowse:Activate()
-	
-	RestArea(aArea)
-return Nil
+	//If !Empty(cArqTrb)
+	//	Ferase(cArqTrb+GetDBExtension())
+	//	Ferase(cArqTrb+OrdBagExt())
+	//	cArqTrb := ""
+	//	TRB->(DbCloseArea())
+	//	delTabTmp('TRB')
+    //	dbClearAll()
+	//Endif
+    	
+return
 
-/*/{Protheus.doc} MenuDef----------------------------------------------------------------------
-description Teste da classe FWMBROWSE com uma tabela padrao
+/*/{Protheus.doc} ExMyFWTempor----------------------------------------------------------------------
+description
 @type function
 @version  12
 @author Eduardo Paro de SImoni
-@since 19/05/2021
+@since 17/05/2021
 @return return_type, return_description
 //---------------------------------------------------------------------------------------------------/*/
+static Function ExMyFWTempor(cAlias as caracter) 
+    local aFields  as array
+    local oTempTable as object
+    local cNameTab as string
+    local cQuery as string
+
+    //-------------------
+    //Criacao do objeto
+    //-------------------
+    oTempTable := FWTemporaryTable():New( cAlias )
+
+    //--------------------------
+    //Monta os campos da tabela
+    //--------------------------
+    aFields := {}
+    aAdd(aFields,{"TMP_COD" ,"C",20,0})
+    aAdd(aFields,{"TMP_DESC","C",20,0})
+    aAdd(aFields,{"TMP_TIPO","C",20,0})
+
+    oTemptable:SetFields( aFields )
+    oTempTable:AddIndex("indice1", {"TMP_COD"} )
+    oTempTable:AddIndex("indice2", {"TMP_DESC", "TMP_TIPO"} )
+    
+    //------------------
+    //Criacao da tabela
+    //------------------
+    oTempTable:Create()
+    cNameTab := oTempTable:GetRealName()
+    ConOut(Repl("-", 80))
+    ConOut(PadC("Tabela criada: " + cNameTab, 80))
+    ConOut(Repl("-", 80))
+
+    DbSelectArea("SB1")
+    DbGotop()
+    conOut("| TMP_COD          |  TMP_DESC         | TMP_TIPO          | ") 
+
+	While  SB1->(!Eof())
+        DbSelectArea(cAlias)
+        RecLock(cAlias,.T.)
+            (cAlias)->TMP_COD     :=  SB1->B1_COD
+            (cAlias)->TMP_DESC    :=  SB1->B1_DESC
+            (cAlias)->TMP_TIPO    :=  SB1->B1_TIPO
+           
+            conOut((cAlias)->TMP_COD + (cAlias)->TMP_DESC + (cAlias)->TMP_TIPO) 
+        MsunLock()
+
+        SB1->(DbSkip())
+	Enddo
+
+    ConOut(Repl("-", 80))
+    ConOut(PadC("Tabela : " + cNameTab + " Prenchida", 80))
+    ConOut(Repl("-", 80))
+return
+
+/*/{Protheus.doc} ExMyFWTempor----------------------------------------------------------------------
+description
+@type function
+@version  12
+@author Eduardo Paro de SImoni
+@since 17/05/2021
+@return return_type, return_description
+//---------------------------------------------------------------------------------------------------/*/
+static function IncCol(cCampo,cTitulo,nArrData,cPicture,nAlign,nSize,nDecimal) as array
+	local aColumn as array
+	local bData 	:= {||} as block
+	default nAlign 	:= 1     as numeric
+	default nSize 	:= 20  as numeric
+	default nDecimal:= 0  as numeric
+	default nArrData:= 0  as numeric
+	
+	
+	If nArrData > 0
+		bData := &("{||" + cCampo +"}") //&("{||oBrowse:DataArray[oBrowse:At(),"+STR(nArrData)+"]}")
+	EndIf
+	
+	/* Array da coluna
+	[n][01] Título da coluna
+	[n][02] Code-Block de carga dos dados
+	[n][03] Tipo de dados
+	[n][04] Máscara
+	[n][05] Alinhamento (0=Centralizado, 1=Esquerda ou 2=Direita)
+	[n][06] Tamanho
+	[n][07] Decimal
+	[n][08] Indica se permite a edição
+	[n][09] Code-Block de validação da coluna após a edição
+	[n][10] Indica se exibe imagem
+	[n][11] Code-Block de execução do duplo clique
+	[n][12] Variável a ser utilizada na edição (ReadVar)
+	[n][13] Code-Block de execução do clique no header
+	[n][14] Indica se a coluna está deletada
+	[n][15] Indica se a coluna será exibida nos detalhes do Browse
+	[n][16] Opções de carga dos dados (Ex: 1=Sim, 2=Não)
+	*/
+	aColumn := {cTitulo,bData,,cPicture,nAlign,nSize,nDecimal,.F.,{||.T.},.F.,{||.T.},NIL,{||.T.},.F.,.F.,{}}
+return {aColumn}
+
 static Function MenuDef()
-    local aRotina := FwMVCMenu(cNomeArq)
-
-return aRotina
-
-/*/{Protheus.doc} ModelDef----------------------------------------------------------------------
-description Teste da classe FWMBROWSE com uma tabela padrao
-@type function
-@version  12
-@author Eduardo Paro de SImoni
-@since 19/05/2021
-@return return_type, return_description
-//---------------------------------------------------------------------------------------------------/*/
-static Function ModelDef()
-	//Criacao do objeto do modelo de dados
-	local oModel := Nil
+	local aRotina 	:= {}
+	local aRotina1 := {}
 	
-	//Criacao da estrutura de dados utilizada na interface
-	local oStSB1 := FWFormStruct(1, "SB1")
+	aAdd(aRotina1, {"Legenda"			, "U_DufwV"		, 0,11, 0, Nil })
 	
-	//Instanciando o modelo, nao e recomendado colocar nome da user function (por causa do u_), respeitando 10 caracteres
-	oModel := MPFormModel():New("zMVCMd1M",/*bPre*/, /*bPos*/,/*bCommit*/,/*bCancel*/) 
+	aAdd(aRotina, {"Pesquisar"			, "PesqBrw"		, 0, 1, 0, .T. })
+	aAdd(aRotina, {"Visualizar"			, "U_DufwV"		, 0, 2, 0, .F. })
 	
-	//Atribuindo formularios para o modelo
-	oModel:AddFields("FORMSB1",/*cOwner*/,oStSB1)
+	aAdd(aRotina, {"Incluir"			, "U_DufwI"		, 0, 3, 0, Nil })
+	aAdd(aRotina, {"Alterar"			, "U_DufwA"		, 0, 4, 0, Nil })
+	aAdd(aRotina, {"Excluir"			, "U_DufwE"		, 0, 5, 3, Nil })
 	
-	//Setando a chave primaria da rotina
-	oModel:SetPrimaryKey({'SB1_FILIAL','SB1_COD'})
+	aAdd(aRotina, {"Mais ações..." , aRotina1, 0, 4, 0, Nil }      )
 	
-	//Adicionando descri�cao ao modelo
-	oModel:SetDescription("Modelo de Dados do Cadastro "+cTitulo)
-	
-	//Setando a descricao do formulario
-	oModel:GetModel("FORMSB1"):SetDescription("Formulario do Cadastro "+cTitulo)
-return oModel
-
-/*/{Protheus.doc} ViewDef----------------------------------------------------------------------
-description Teste da classe FWMBROWSE com uma tabela padrao
-@type function
-@version  12
-@author Eduardo Paro de SImoni
-@since 19/05/2021
-@return return_type, return_description
-//---------------------------------------------------------------------------------------------------/*/
-static Function ViewDef()
-	//Criacaoo do objeto do modelo de dados da Interface do Cadastro de Autor/Interprete
-	local oModel := FWLoadModel(cNomeArq)
-	
-	//Criacaoo da estrutura de dados utilizada na interface do cadastro de Autor
-	local oStSB1 := FWFormStruct(2, "SB1")  //pode se usar um terceiro parametro para filtrar os campos exibidos { |cCampo| cCampo $ 'SB1_NOME|SB1_DTAFAL|'}
-	
-	//Criando oView como nulo
-	local oView := Nil
-
-	//Criando a view que sera o retorno da fun�caoo e setando o modelo da rotina
-	oView := FWFormView():New()
-	oView:SetModel(oModel)
-	
-	//Atribuindo formularios para interface
-	oView:AddField("VIEW_SB1", oStSB1, "FORMSB1")
-	
-	//Criando um container com nome tela com 100%
-	oView:CreateHorizontalBox("TELA",100)
-	
-	//Colocando ti�tulo do formulario
-	oView:EnableTitleView('VIEW_SB1', 'Dados do Grupo de Produtos' )  
-	
-	//Forca o fechamento da janela na confirma�caoo
-	oView:SetCloseOnOk({||.T.})
-
-	//O formulario da interface sera� colocado dentro do container
-	oView:SetOwnerView("VIEW_SB1","TELA")
-return oView
-
-
-
+return(aRotina)
