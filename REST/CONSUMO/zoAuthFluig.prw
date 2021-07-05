@@ -15,7 +15,7 @@ Function u_StatWsFl() as undefined
    // //Endereco
    local cEnderWS       := "http://paladino:8083"           as string
    local cPath          := "/api/public/ecm/dataset/search" as string
-   local cParams        := "?datasetId=colleague"           as string
+   local cParams        := "&datasetId=colleague"           as string
    
    //FWoAuthURL
    local cRequest       := "http://paladino:8083/portal/api/rest/oauth/access_token"   as string
