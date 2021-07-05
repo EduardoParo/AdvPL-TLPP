@@ -15,7 +15,7 @@ Function u_StatWsFl() as undefined
    // //Endereco
    local cEnderWS       := "http://paladino:8083"           as string
    local cPath          := "/api/public/ecm/dataset/search" as string
-   local cParams        := "?datasetId=colleague"           as string
+   local cParams        := "&datasetId=colleague"           as string //OS PARAMETROS DEVEM SER ENCAMINHADOS PARA A CLASSE COM O '&'
    
    //FWoAuthURL
    local cRequest       := "http://paladino:8083/portal/api/rest/oauth/access_token"   as string
@@ -29,7 +29,7 @@ Function u_StatWsFl() as undefined
    local cToken         := "4ba21a47-d9cd-4a38-8ca6-3b02e73463ce804d1fe2-61b6-4c52-ac6a-0f090452fc15" as string//TOKEN
    local cAccToken      := "bc5ecacc-24ea-4063-a3ae-24b0d94249a9" as string//secret token, ou access token
    
-   local aHeadOut:={} as array
+   local aHeadOut:={} as arrayu_StatWsFl
    local CHEADRET, cBody:=""as string
 
    oURL     := FWoAuthURL():New( cRequest , cAuthorize , cAccess )
@@ -58,7 +58,7 @@ Function u_StatWsFl() as undefined
 
     cUrl:=cEnderWS+cPath
      //FWOAUTHCLIENT():Get( cURL, cQuery, cBody, aHeadOut, cHeadRet, lUTF8 )->cResponse
-   cRetPost := oClient:Get(cUrl, cParams, cBody, aHeadOut, @cHeadRet, .T.)
+   cRetPost := oClient:Get(cUrl, cParams, "", aHeadOut, @cHeadRet, .T.)
 
 Return
 
