@@ -49,6 +49,7 @@ function U_xFina811()
 	aAdd( a811Param,  {}                                          )   //{} (tipo array) - IMPORTANTE: ENVIAR ARRAY VAZIO
 	aAdd( a811Param,  ''                                          )   //"" (tipo caracter) - IMPORTANTE: SEMPRE VAZIO
 	aAdd( a811Param,  cLay                                       )   //Código do layout da carta a ser utilizado (tipo caracter)
+  aAdd( a811Param,  '2'                                       )   //A1_MSBLQL
 
 	MSExecAuto({|x,y| Fina811(x,y)},0,a811Param)
 
@@ -81,5 +82,6 @@ a811Param[13] :="2" (tipo caracter) - IMPORTANTE: SEMPRE 2 PARA NÃO APRESENTAR 
 a811Param[14] := {} (tipo array) - IMPORTANTE: ENVIAR ARRAY VAZIO
 a811Param[15] := "" (tipo caracter) - IMPORTANTE: SEMPRE VAZIO
 a811Param[16] := Código do layout da carta a ser utilizado (tipo caracter) 
+a811Param[17] := A1_MSBLQL 
 */
 
