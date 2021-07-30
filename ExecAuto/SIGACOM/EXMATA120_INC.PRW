@@ -13,7 +13,7 @@ SELECT * FROM SC7990 ORDER BY R_E_C_N_O_ DESC
 Function U_EXEC122() // teste ok 03/03/2020
 	
 	if !RpcSetEnv("99","02","Administrador","","COM")
-		msgInfo("Não foi possivel realizar o login")
+		msgInfo("NÃ£o foi possivel realizar o login")
 		return 
 	endIf
 
@@ -39,13 +39,13 @@ function U_EXEC121() as undefined
 	private lMsErroAuto := .F.
 
 	if !RpcSetEnv("99","01","Administrador","","COM")
-		msgInfo("Não foi possivel realizar o login")
+		msgInfo("NÃ£o foi possivel realizar o login")
 		return 
 	endIf
 
 	dbSelectArea("SC7")
 
-	//Teste de Inclusão
+	//Teste de InclusÃ£o
 	cDoc := GetSXENum("SC7","C7_NUM")
 	SC7->(dbSetOrder(1))
 
@@ -58,14 +58,14 @@ function U_EXEC121() as undefined
 	dbSelectArea("SA2")
 	SA2->(DbSetOrder(1))//A2_FILIAL, A2_COD, A2_LOJA, R_E_C_N_O_, D_E_L_E_T_
 	if !SA2->(DbSeek(xFilial("SA2")+PadR(cForn,Tamsx3("A2_COD")[1])))
-		msgINFO("Não foi encontrado o Fornecedor")
+		msgINFO("NÃ£o foi encontrado o Fornecedor")
 		RETURN
 	endIf
 
 	dbSelectArea("SB1")
 	SB1->(DbSetOrder(1))//B1_FILIAL, B1_COD, R_E_C_N_O_, D_E_L_E_T_
 	if !SB1->(DbSeek(xFilial("SB1")+PadR(cProd,Tamsx3("B1_COD")[1])))
-		msgINFO("Não foi encontrado o produto")
+		msgINFO("NÃ£o foi encontrado o produto")
 		RETURN
 	endIf
 
@@ -93,7 +93,7 @@ function U_EXEC121() as undefined
 	Else
 		ConOut("Erro na inclusao!")
 		cFileLog := NomeAutoLog()
-		MostraErro(cPath,cFile)		
+		MostraErro("",cFile)		
 		cErro := FwNoAccent(MemoRead("" + cFile))
 	EndIf
 
