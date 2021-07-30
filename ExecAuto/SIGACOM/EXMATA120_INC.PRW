@@ -10,14 +10,14 @@ SELECT * FROM SC7990 ORDER BY R_E_C_N_O_ DESC
 @author Eduardo Paro de SImoni
 @GitHub.com/EduardoParo
 //---------------------------------------------------------------------------------------------------/*/
-Function U_EXEC122() // teste ok 03/03/2020
+Function U_EXEC122() 
 	
 	if !RpcSetEnv("99","02","Administrador","","COM")
 		msgInfo("Não foi possivel realizar o login")
 		return 
 	endIf
 
-	STARTJOB("U_FINAJOB",getenvserver(),.t.,,,)
+	STARTJOB("U_EXEC121",getenvserver(),.t.,,,)
 
 	RpcClearEnv()
 Return
