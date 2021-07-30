@@ -5,7 +5,7 @@
 https://tdn.totvs.com/pages/releaseview.action?pageId=6089279
 SELECT * FROM SC7990 ORDER BY R_E_C_N_O_ DESC 
 /{Protheus.doc}----------------------------------------------------------------------
-@type function 
+@type Function 
 @version  12
 @author Eduardo Paro de SImoni
 @GitHub.com/EduardoParo
@@ -14,7 +14,7 @@ Function U_EXEC122()
 	
 	if !RpcSetEnv("99","02","Administrador","","COM")
 		msgInfo("Não foi possivel realizar o login")
-		return 
+		Return 
 	endIf
 
 	STARTJOB("U_EXEC121",getenvserver(),.t.,,,)
@@ -23,24 +23,24 @@ Function U_EXEC122()
 Return
 
 
-function U_EXEC121() as undefined
+Function U_EXEC121() as undefined
 	//<<NAO MANIPULAR O FONTE>> APENAS CHUMBE OS VALORES NAS VARIAVEIS
-	local aCabec := {} as array
-	local aItens := {} as array
-	local aLinha := {} as array
+	Local aCabec := {} as array
+	Local aItens := {} as array
+	Local aLinha := {} as array
 	
-	local nX := 1 as numeric
-	local cDoc := "" as string
-	local nOpc := 3 as numeric
+	Local nX := 1 as numeric
+	Local cDoc := "" as string
+	Local nOpc := 3 as numeric
 
-	local cForn :="F00000"
-	local cProd :="PROD           "
-
-	private lMsErroAuto := .F.
+	Local cForn :="F00000"
+	Local cProd :="PROD           "
+	//CONFORME ESTÁ NA DOCUMENTAÇÃO
+	Private lMsErroAuto := .F.
 
 	if !RpcSetEnv("99","01","Administrador","","COM")
 		msgInfo("Não foi possivel realizar o login")
-		return 
+		Return 
 	endIf
 
 	dbSelectArea("SC7")
@@ -59,14 +59,14 @@ function U_EXEC121() as undefined
 	SA2->(DbSetOrder(1))//A2_FILIAL, A2_COD, A2_LOJA, R_E_C_N_O_, D_E_L_E_T_
 	if !SA2->(DbSeek(xFilial("SA2")+PadR(cForn,Tamsx3("A2_COD")[1])))
 		msgINFO("Não foi encontrado o Fornecedor")
-		RETURN
+		Return
 	endIf
 
 	dbSelectArea("SB1")
 	SB1->(DbSetOrder(1))//B1_FILIAL, B1_COD, R_E_C_N_O_, D_E_L_E_T_
 	if !SB1->(DbSeek(xFilial("SB1")+PadR(cProd,Tamsx3("B1_COD")[1])))
 		msgINFO("Não foi encontrado o produto")
-		RETURN
+		Return
 	endIf
 
 	aadd(aCabec,{"C7_NUM" ,cDoc})
