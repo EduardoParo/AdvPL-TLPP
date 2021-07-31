@@ -12,11 +12,11 @@ SELECT * FROM SC7990 ORDER BY R_E_C_N_O_ DESC
 //---------------------------------------------------------------------------------------------------/*/
 Function U_EXEC122() 
 	
-	if !RpcSetEnv("99","02","Administrador","","COM")
+	if !RpcSetEnv("99","01","Administrador","","COM")
 		msgInfo("Não foi possivel realizar o login")
 		Return 
 	endIf
-
+	//AGORA VOU FORÇAR UM ERRO.LOG
 	STARTJOB("U_EXEC121",getenvserver(),.t.,,,)
 
 	RpcClearEnv()
@@ -35,10 +35,11 @@ Function U_EXEC121() as undefined
 
 	Local cForn :="F00000"
 	Local cProd :="PROD           "
-	//CONFORME ESTÁ NA DOCUMENTAÇÃO
+	
+	Private lMsHelpAuto := .T.
 	Private lMsErroAuto := .F.
 
-	if !RpcSetEnv("99","01","Administrador","","COM")
+	if !RpcSetEnv("99","02","Administrador","","COM")
 		msgInfo("Não foi possivel realizar o login")
 		Return 
 	endIf
@@ -73,7 +74,7 @@ Function U_EXEC121() as undefined
 	aadd(aCabec,{"C7_EMISSAO" ,dDataBase})
 	aadd(aCabec,{"C7_FORNECE" ,SA2->A2_COD})
 	aadd(aCabec,{"C7_LOJA" ,SA2->A2_LOJA})
-	aadd(aCabec,{"C7_COND" ,"001"})
+	aadd(aCabec,{"C7_COND" ,"00x"})
 	aadd(aCabec,{"C7_CONTATO" ,"AUTO"})
 	aadd(aCabec,{"C7_FILENT" ,cFilAnt})
 
@@ -85,16 +86,17 @@ Function U_EXEC121() as undefined
 		aadd(aLinha,{"C7_TOTAL" ,100 ,nil})
 		aadd(aItens,aLinha)
 	Next nX
-
+//VOU FORCAR O ERRO.LOG
 	MSExecAuto({|a,b,c,d,e,f,g| MATA120(a,b,c,d,e,f,,g)},1,aCabec,aItens,nOpc,.F.,nil,nil)
 
 	If !lMsErroAuto
 		ConOut("Incluido PC: "+cDoc)
 	Else
 		ConOut("Erro na inclusao!")
-		cFileLog := NomeAutoLog()
-		MostraErro("",cFile)		
-		cErro := FwNoAccent(MemoRead("" + cFile))
+		cFile := NomeAutoLog()
+		MostraErro("/spool/",cFile)	
+		//aLog := aClone(GetAutoGRLog())	 	
+		cErro := FwNoAccent(MemoRead("/spool/" + cFile))
 	EndIf
 
 	RpcClearEnv()
